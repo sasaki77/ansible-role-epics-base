@@ -1,6 +1,6 @@
 # Ansible Role: EPICS Base
 
-Installs EPICS Base and its extensions and modules on RHEL/CentOS.
+Installs EPICS Base on RHEL/CentOS.
 
 ## Requirements
 
