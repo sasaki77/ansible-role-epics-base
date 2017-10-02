@@ -1,0 +1,5 @@
+- name: Make epics module
+  make:
+    chdir: "{{ epics_base_modules_name }}/{{ module.type }}/{{ module.name }}/{{ module.ver }}"
+  environment:
+    EPICS_HOST_ARCH: "{{ epics_base_epics_host_arch }}"

@@ -1,0 +1,50 @@
+- name: Include OS Specific setup tasks
+  include_tasks: setup-{{ ansible_os_family }}.yml
+
+- name: Make epics dir structure
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: 0755
+    group: vagrant
+    owner: vagrant
+    recurse: yes
+  with_items:
+    - "{{ epics_base_epics_directory}}"
+    - "{{ epics_base_epics_directory }}/app"
+    - "{{ epics_base_modules_name }}/soft"
+    - "{{ epics_base_modules_name }}/instruments"
+  become: true
+
+- name: Chack base exists
+  stat: path={{ epics_base_base_name }}/README
+  register: base_exists
+
+- block:
+  - name: Download epics base and extnsionTop srcs
+    unarchive:
+      src: "{{ item.src }}"
+      dest: "{{ item.dest }}"
+      remote_src: True
+    with_items:
+      - { src: '{{ epics_base_base_url }}', dest: '{{ epics_base_epics_directory }}'}
+      - { src: '{{ epics_base_extensions_top_url }}' , dest: '{{ epics_base_epics_directory }}' }
+  - name: Move base
+    command: mv "{{ epics_base_epics_directory }}/{{ epics_base_base_unarchived_name }}" "{{ epics_base_base_name }}"
+  when: not base_exists.stat.exists
+
+- name: Make epics base
+  make:
+    chdir: "{{ item }}"
+  environment:
+    EPICS_HOST_ARCH: "{{ epics_base_epics_host_arch }}"
+  with_items:
+    - "{{ epics_base_base_name }}"
+
+- name: Add environments to bash_profile
+  lineinfile:
+    path: "~/.bash_profile"
+    state: present
+    line: "{{item}}"
+  with_items:
+    - "export PATH=$PATH:{{ epics_base_base_name }}/bin/{{ epics_base_epics_host_arch }}"

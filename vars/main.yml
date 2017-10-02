@@ -1,0 +1,25 @@
+redhat_packages:
+  - git
+  - gcc
+  - gcc-c++
+  - make
+  - perl
+  - perl-devel
+  - perl-Pod-Checker
+  - vim
+  - wget
+  - readline
+  - readline-devel
+
+debian_packages:
+  - git
+  - gcc
+  - gcc-c++
+  - make
+  - perl
+  - perl-devel
+  - perl-Pod-Checker
+  - vim
+  - wget
+  - readline
+  - readline-devel

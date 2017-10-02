@@ -1,0 +1,22 @@
+- name: Make module dir
+  file:
+    path: "{{ epics_base_modules_name }}/{{ module.type }}/{{ module.name }}"
+    state: directory
+    mode: 0755
+    group: vagrant
+    owner: vagrant
+
+- name: Chack module exists
+  stat: path={{ epics_base_modules_name }}/{{ module.type }}/{{ module.name }}/{{ module.ver }}
+  register: module_exists
+
+- block:
+  - name: Download module src
+    unarchive:
+      src: "{{ module.url }}"
+      dest: "{{ epics_base_modules_name }}/{{ module.type }}/{{ module.name }}"
+      remote_src: True
+
+  - name: Move base
+    command: "mv {{ epics_base_modules_name }}/{{ module.type }}/{{ module.name }}/{{ module.unarchived_name }} {{ epics_base_modules_name }}/{{ module.type }}/{{ module.name }}/{{ module.ver }}"
+  when: not module_exists.stat.exists

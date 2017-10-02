@@ -1,0 +1,6 @@
+- name: Edit module's EPICS_BASE in configure/RELEASE
+  lineinfile:
+    dest: '{{ epics_base_modules_name }}/{{ module.type }}/{{ module.name }}/{{ module.ver }}/configure/RELEASE'
+    regexp: '{{ item.reg }}'
+    line: '{{ item.name }}={{ item.path }}'
+  with_items: "{{ module.configure_release }}"
