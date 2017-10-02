@@ -6,8 +6,8 @@
     path: "{{ item }}"
     state: directory
     mode: 0755
-    group: vagrant
-    owner: vagrant
+    owner: "{{ epics_base_owner }}"
+    group: "{{ epics_base_group }}"
     recurse: yes
   with_items:
     - "{{ epics_base_epics_directory}}"
