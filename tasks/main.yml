@@ -40,11 +40,3 @@
     EPICS_HOST_ARCH: "{{ epics_base_epics_host_arch }}"
   with_items:
     - "{{ epics_base_base_name }}"
-
-- name: Add environments to bash_profile
-  lineinfile:
-    path: "~/.bash_profile"
-    state: present
-    line: "{{item}}"
-  with_items:
-    - "export PATH=$PATH:{{ epics_base_base_name }}/bin/{{ epics_base_epics_host_arch }}"
