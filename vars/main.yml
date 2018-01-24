@@ -6,7 +6,6 @@ redhat_packages:
   - perl
   - perl-devel
   - perl-Pod-Checker
-  - vim
   - wget
   - readline
   - readline-devel
@@ -14,12 +13,8 @@ redhat_packages:
 debian_packages:
   - git
   - gcc
-  - gcc-c++
+  - build-essential 
   - make
   - perl
-  - perl-devel
-  - perl-Pod-Checker
-  - vim
   - wget
-  - readline
-  - readline-devel
+  - libreadline6-dev
